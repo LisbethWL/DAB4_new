@@ -196,7 +196,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProsumerInfoesController.cs" />
     <Compile Include="Controllers\TraderInfoesController.cs" />
-    <Compile Include="Controllers\VillageSmartGrid.cs" />
+    <Compile Include="Controllers\VillageSmartGridController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
