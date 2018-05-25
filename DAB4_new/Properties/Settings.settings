@@ -1,0 +1,18 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="DAB4_new.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="EndpointURL" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">https://f18i4dab.documents.azure.com:443/</Value>
+    </Setting>
+    <Setting Name="PrimaryKey" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">vmbfFVnIqKYcdYCVRqHXDpkqh471dqeELczO4rbVKoYpI5NUJ4D34DegxTFTS4FhNiCw6B477WVqhjqNABSdow==</Value>
+    </Setting>
+    <Setting Name="TraderDBName" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">F18I4DABH4Gr11</Value>
+    </Setting>
+    <Setting Name="TraderDBColl" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">VillageSmartGrid</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
