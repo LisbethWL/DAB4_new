@@ -216,6 +216,10 @@
     <Compile Include="Migrations\201805251526423_updated2.Designer.cs">
       <DependentUpon>201805251526423_updated2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201805251755119_Traderinfo.cs" />
+    <Compile Include="Migrations\201805251755119_Traderinfo.Designer.cs">
+      <DependentUpon>201805251755119_Traderinfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\DAB4_newContext.cs" />
     <Compile Include="Models\ProsumerInfo.cs" />
@@ -316,6 +320,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201805251526423_updated2.resx">
       <DependentUpon>201805251526423_updated2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805251755119_Traderinfo.resx">
+      <DependentUpon>201805251755119_Traderinfo.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

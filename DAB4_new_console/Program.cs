@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,69 +15,80 @@ namespace DAB4_new_console
 {
     class Program
     {
-        static string _url = "http://localhost:53135/api/ProsumerInfoes/";
-        static HttpClient _client = new HttpClient();
-
-        public static async Task<HttpResponseMessage> Put(int id, Prosumer value)
-        {
-            var content = JsonConvert.SerializeObject(value);
-            var buffer = System.Text.Encoding.UTF8.GetBytes(content);
-            var byteContent = new ByteArrayContent(buffer);
-            byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-
-            var x = new Uri(_url + id);
-            Console.WriteLine("Put: " + x);
-
-            var response = await _client.PutAsync(new Uri(_url + id), byteContent);
-            return response;
-        }
-        public static async Task<HttpResponseMessage> Delete(int id)
-        {
-            var response = await _client.DeleteAsync(new Uri(_url + id));
-            return response;
-        }
-
-        public static async Task<HttpResponseMessage> Post(Prosumer value)
-        {
-            var content = JsonConvert.SerializeObject(value);
-            var buffer = System.Text.Encoding.UTF8.GetBytes(content);
-            var byteContent = new ByteArrayContent(buffer);
-            byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-
-            //var x = new Uri(_url);
-            //Console.WriteLine("Post: " + x);
-
-            var response = await _client.PostAsync(new Uri(_url), byteContent);
-
-            //Console.WriteLine(response);
-            return response;
-        }
-        public static async Task<Prosumer> Get(int id)
-        {
-            var response = await _client.GetStringAsync(new Uri(_url + id));
-            return JsonConvert.DeserializeObject<Prosumer>(response);
-        }
-        public static async Task<List<Prosumer>> GetAll()
-        {
-            var response = await _client.GetStringAsync(new Uri(_url));
-            return JsonConvert.DeserializeObject<List<Prosumer>>(response);
-        }
-
 
         static void Main(string[] args)
         {
+            List<Prosumer> positiveList = new List<Prosumer>();
+            List<Prosumer> negativeList = new List<Prosumer>();
+
             while (true)
             {
+                RunProsumers();
+                
+                Console.WriteLine("Positive list: ");
+                foreach (var v in positiveList)
+                {
+                    Console.Write(v.DifferencekW + " ");
+                }
+
+                Console.WriteLine("\nNegative list: ");
+                foreach (var v in negativeList)
+                {
+                    Console.Write(v.DifferencekW + " ");
+                }
+
+                ProsumerTrades();
                 Console.ReadKey();
                 Console.Clear();
-                RunProsumers();
+            }
+
+            void ProsumerTrades()
+            {
+                for (int i = 0; i < negativeList.Count; i++)
+                {
+                    int mangler = negativeList[i].DifferencekW;
+                    for (int j = 0; j < positiveList.Count; j++)
+                    {
+                        if (positiveList[j].DifferencekW > mangler && mangler!=0)
+                        {
+                            Console.WriteLine(positiveList[j].Id + " traded " + mangler + " with " + negativeList[i].Id);
+                            TraderInfoRestConsumer.Post(new TradeInfoModel()
+                            {
+                                Token = mangler,
+                                BitCoin = 0,
+                                sellerId = negativeList[i].Id,
+                                buyerId = positiveList[j].Id,
+                                amount = 0
+                            }).Wait();
+                            positiveList[j].DifferencekW = positiveList[j].DifferencekW - mangler;
+                            mangler = 0;
+                        }
+                        else
+                        {
+                            Console.WriteLine(positiveList[j].Id + " traded " + positiveList[j].DifferencekW + " with " + negativeList[i].Id);
+                            TraderInfoRestConsumer.Post(new TradeInfoModel()
+                            {
+                                Token = mangler,
+                                BitCoin = 0,
+                                sellerId = negativeList[i].Id,
+                                buyerId = positiveList[j].Id,
+                                amount = 0
+                            }).Wait();
+                            mangler = mangler - positiveList[j].DifferencekW;
+                            positiveList[j].DifferencekW = 0;
+                        }
+                    }
+                }
+
+                int negativeSum = negativeList.Sum(x => x.DifferencekW);
+                int positiveSum = positiveList.Sum(x => x.DifferencekW);
             }
 
             void RunProsumers()
             {
-                foreach (var v in GetAll().Result)
+                foreach (var v in ProsumerRestConsumer.GetAll().Result)
                 {
-                    Delete(v.Id).Wait();
+                    ProsumerRestConsumer.Delete(v.Id).Wait();
                 }
 
                 int privateProduced = 0;
@@ -99,38 +111,41 @@ namespace DAB4_new_console
                 for (int i = 0; i < 33; i++)
                 {
                     Prosumer privateProsumer = new Prosumer(i, "Private");
-                    privateProsumer.ConsumedkW = rnd.Next(0, 100);
-                    privateProsumer.ProducedkW = rnd.Next(0, 100);
+                    privateProsumer.ConsumedkW = rnd.Next(1, 100);
+                    privateProsumer.ProducedkW = rnd.Next(1, 100);
                     privateProsumer.DifferencekW = privateProsumer.ProducedkW - privateProsumer.ConsumedkW;
                     pl.Add(privateProsumer);
-                    try
+
+                    if (privateProsumer.DifferencekW < 0)
                     {
-                        var test = Get(i).Result;
-                        Put(i, privateProsumer).Wait();
+                        negativeList.Add(privateProsumer);
                     }
-                    catch (Exception)
+                    else
                     {
-                        Post(privateProsumer).Wait();
+                        positiveList.Add(privateProsumer);
                     }
+                    ProsumerRestConsumer.Post(privateProsumer).Wait();
                 }
 
                 //Set up business prosumers
                 for (int j = 33; j < 45; j++)
                 {
                     Prosumer businessProsumer = new Prosumer(j, "Business");
-                    businessProsumer.ConsumedkW = rnd.Next(0, 500);
-                    businessProsumer.ProducedkW = rnd.Next(0, 500);
+                    businessProsumer.ConsumedkW = rnd.Next(1, 500);
+                    businessProsumer.ProducedkW = rnd.Next(1, 500);
                     businessProsumer.DifferencekW = businessProsumer.ProducedkW - businessProsumer.ConsumedkW;
+
+                    if (businessProsumer.DifferencekW < 0)
+                    {
+                        negativeList.Add(businessProsumer);
+                    }
+                    else
+                    {
+                        positiveList.Add(businessProsumer);
+                    }
                     bl.Add(businessProsumer);
-                    try
-                    {
-                        var test = Get(j).Result;
-                        Put(j, businessProsumer).Wait();
-                    }
-                    catch (Exception)
-                    {
-                        Post(businessProsumer).Wait();
-                    }
+                    ProsumerRestConsumer.Post(businessProsumer).Wait();
+                    
                 }
 
 
@@ -174,7 +189,7 @@ namespace DAB4_new_console
 
                 Console.WriteLine(villageDifference);
 
-                Post(nationalProsumer).Wait();
+                ProsumerRestConsumer.Post(nationalProsumer).Wait();
             }
         }
     }

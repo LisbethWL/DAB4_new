@@ -49,6 +49,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Prosumer.cs" />
     <Compile Include="ProsumerModel.cs" />
+    <Compile Include="ProsumerRestConsumer.cs" />
+    <Compile Include="TradeInfoModel.cs" />
+    <Compile Include="TraderInfoRestConsumer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
