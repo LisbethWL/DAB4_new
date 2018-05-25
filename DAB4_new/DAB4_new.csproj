@@ -161,6 +161,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\DocumentDBSeeder.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\SwaggerConfig.cs" />
@@ -219,6 +220,10 @@
     <Compile Include="Migrations\201805251755119_Traderinfo.cs" />
     <Compile Include="Migrations\201805251755119_Traderinfo.Designer.cs">
       <DependentUpon>201805251755119_Traderinfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805251838094_DocumentDB.cs" />
+    <Compile Include="Migrations\201805251838094_DocumentDB.Designer.cs">
+      <DependentUpon>201805251838094_DocumentDB.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\DAB4_newContext.cs" />
@@ -323,6 +328,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201805251755119_Traderinfo.resx">
       <DependentUpon>201805251755119_Traderinfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805251838094_DocumentDB.resx">
+      <DependentUpon>201805251838094_DocumentDB.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

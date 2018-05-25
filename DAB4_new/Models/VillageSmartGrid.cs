@@ -27,9 +27,5 @@ namespace DAB4_new.Models
         /// Typen af produktet
         /// </summary>
         public string ProductType { get; set; }
-        /// <summary>
-        /// SmartMeter
-        /// </summary>
-        public string SmartMeter { get; set; }
     }
 }

@@ -52,6 +52,8 @@
     <Compile Include="ProsumerRestConsumer.cs" />
     <Compile Include="TradeInfoModel.cs" />
     <Compile Include="TraderInfoRestConsumer.cs" />
+    <Compile Include="VillageSmartGridModel.cs" />
+    <Compile Include="VillageSmartGridRestConsumer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
