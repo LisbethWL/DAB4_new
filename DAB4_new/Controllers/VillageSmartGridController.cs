@@ -42,6 +42,10 @@ namespace DAB4_new.Controllers
             }
         }
 
+        /// <summary>
+        /// Post/api/VillageSmartGrid
+        /// </summary>
+        /// <param name="value"></param>
         public void Post([FromBody] VillageSmartGrid value)
         {
             try
@@ -55,6 +59,11 @@ namespace DAB4_new.Controllers
             }
         }
 
+        /// <summary>
+        /// Put/api/villageSmartGrid
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="value"></param>
         public void Put(String id, [FromBody] VillageSmartGrid value)
         {
             try
@@ -68,6 +77,10 @@ namespace DAB4_new.Controllers
             }
         }
 
+        /// <summary>
+        /// Delete/api/VillageSmartGrid
+        /// </summary>
+        /// <param name="id"></param>
         public void Delete(string id)
         {
             try
