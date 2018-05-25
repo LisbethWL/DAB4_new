@@ -6,14 +6,8 @@ using System.Threading.Tasks;
 
 namespace DAB4_new_console
 {
-    class Prosumer
+    class ProsumerModel
     {
-        public Prosumer(int proId, string proType)
-        {
-            Type = proType;
-            Id = proId;
-        }
-
         public int Id { get; set; }
         public int ProducedkW { get; set; }
         public int ConsumedkW { get; set; }

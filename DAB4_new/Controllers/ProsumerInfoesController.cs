@@ -38,7 +38,8 @@ namespace DAB4_new.Controllers
 
         // PUT: api/ProsumerInfoes/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutProsumerInfo(int id, ProsumerInfo prosumerInfo)
+        [HttpPut]
+        public async Task<IHttpActionResult> Put(int id, [FromBody] ProsumerInfo prosumerInfo)
         {
             if (!ModelState.IsValid)
             {
@@ -73,7 +74,7 @@ namespace DAB4_new.Controllers
 
         // POST: api/ProsumerInfoes
         [ResponseType(typeof(ProsumerInfo))]
-        public async Task<IHttpActionResult> PostProsumerInfo(ProsumerInfo prosumerInfo)
+        public async Task<IHttpActionResult> PostProsumerInfo([FromBody] ProsumerInfo prosumerInfo)
         {
             if (!ModelState.IsValid)
             {
