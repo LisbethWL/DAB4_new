@@ -24,7 +24,7 @@ namespace DAB4_new_console
             while (true)
             {
                 RunProsumers();
-                
+
                 Console.WriteLine("Positive list: ");
                 foreach (var v in positiveList)
                 {
