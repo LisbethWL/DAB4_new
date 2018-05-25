@@ -192,6 +192,8 @@
     <Compile Include="Models\VillageSmartGrid.cs" />
     <Compile Include="Models\VillageSmartGridContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\IVillageSmartGridRepository.cs" />
+    <Compile Include="Repository\VillageSmartGridRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
